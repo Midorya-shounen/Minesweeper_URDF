@@ -1,0 +1,6 @@
+echo ---
+echo Generating URDF...
+rosrun xacro xacro -o Robot.urdf design.xacro 
+echo Generating SDF...
+gz sdf -p Robot.urdf > design.sdf
+echo ---

@@ -1,0 +1,95 @@
+<?xml version="1.0" ?>
+<robot name="robot_mine" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find master_robot)/urdf/robot.gazebo" />
+  <xacro:include filename="$(find master_robot)/urdf/wheel.xacro" />
+  <xacro:include filename="$(find master_robot)/urdf/imu_model.urdf.xacro" />
+ 
+<!--
+  <link name="world" />
+  <joint name="worldToDummy" type="fixed" >
+    <parent link="world"/>
+    <child link="dummy"/>
+  </joint>  
+  <link name="dummy" />   -->
+
+  <link name="link_chassis">
+    <!-- pose and inertial -->
+    <pose>0 0 0.1 0 0 0</pose>
+    <inertial>
+      <mass value="11"/>
+      <origin rpy="0 0 0" xyz="0 0 0.1"/>
+      <inertia ixx="0.1558333333" ixy="0" ixz="0" iyy="0.2383333333" iyz="0" izz="0.3758333333"/>
+    </inertial>
+    <!-- body -->
+    <collision name="collision_chassis">
+      <geometry>
+        <box size="0.5 0.4 0.1"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <box size="0.5 0.4 0.1"/>
+      </geometry>
+      <material name="blue">
+        <color rgba="0.203125 0.23828125 0.28515625 1.0"/>
+      </material>
+    </visual>
+    <!-- metal_detector-->
+    
+    <collision name="metal_detector_bar">
+      <geometry>
+        <box size="0.2 0.05 0.0025"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin rpy="0 0 0" xyz="0.25 0 0"/>
+      <geometry>
+        <box size="0.2 0.05 0.0025"/>
+      </geometry>
+      <material name="white">
+        <color rgba="1.0 1.0 1.0 1.0"/>
+      </material>
+    </visual>
+    <collision name="metal_detector_holder">
+      <geometry>
+        <box size="0.15 0.5 0.004"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin rpy="0 0 0" xyz="0.35 0 0"/>
+      <geometry>
+        <box size="0.15 0.5 0.004"/>
+      </geometry>
+      <material name="red">
+        <color rgba="0.80078125 0.12890625 0.1328125 1.0"/>
+      </material>
+    </visual>
+  </link> 
+  
+
+  <!--  <joint name="dummy_joint" type="fixed">
+     <parent link="dummy"/>
+     <child link="link_chassis"/>
+   </joint>
+   <xacro:imu_sensor xyz="-0.1 0 ${0.04 + 0.01}" rpy="0 0 0" parent="link_chassis" />   -->
+
+<xacro:imu_sensor xyz="0 0 0" rpy="0 0 0" parent="link_chassis" />
+
+
+ <!--front-->
+  <xacro:link_wheel name="link_front_right_wheel" />
+  <xacro:joint_wheel name="joint_front_right_wheel" child="link_front_right_wheel" origin_xyz="0.15 0.23 0" />
+
+  <xacro:link_wheel name="link_front_left_wheel" />
+  <xacro:joint_wheel name="joint_front_left_wheel" child="link_front_left_wheel" origin_xyz="0.15 -0.23 0" />
+   <!--back-->
+   
+  <xacro:link_wheel name="link_back_right_wheel" />
+  <xacro:joint_wheel name="joint_back_right_wheel" child="link_back_right_wheel" origin_xyz="-0.15 0.23 0" />
+
+  <xacro:link_wheel name="link_back_left_wheel" />
+  <xacro:joint_wheel name="joint_back_left_wheel" child="link_back_left_wheel" origin_xyz="-0.15 -0.23 0" />
+  
+</robot>
